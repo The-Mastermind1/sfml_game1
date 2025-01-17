@@ -113,11 +113,11 @@ public:
 	void modifyPosition(sf::RenderWindow &window,int kati,int kati2) {
 		if (ball.getPosition().x <= 0) {
 			
-			reset(window);
+			abort();
 		}
 		else if (ball.getPosition().x >= window.getSize().x) {
 			
-			reset(window);
+			abort();
 		}
 
 
@@ -219,17 +219,10 @@ public:
 	sf::FloatRect get() {
 		return ball.getGlobalBounds();
 	}
-	void reset(sf::RenderWindow &window) {
-		
-		ball.setPosition(sf::Vector2{ 450.f,250.f });
-		
-		Sleep(1000);
-	}
-
+	
 	
 
 };
-
 
 
 
