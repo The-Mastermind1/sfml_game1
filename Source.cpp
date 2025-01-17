@@ -47,13 +47,13 @@ int main() {
         if (ball1.get().intersects(player1.get())) {
             kati2 = rand() % 3 + 1;
             kati = 1;
-            
+            ball1.kati3 = 0;
             ball1.modifyPosition(window, kati,kati2);
         }
         else if (ball1.get().intersects(player2.get())) {
             kati2 = rand() % 3 + 1;
             kati = 2;
-           
+            ball1.kati3 = 0;
             ball1.modifyPosition(window, kati,kati2);
         }
         ball1.modifyPosition(window, kati,kati2);
