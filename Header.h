@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include<SFML/Graphics.hpp>
-
+#include<Windows.h>
 #include<ctime>
 #include<cstdlib>
 class Player1 {
@@ -88,13 +88,14 @@ public:
 };
 class Ball {
 	sf::CircleShape ball;
-	
+	int task;
 public:
-	
-	Ball() {
+	int kati3;
+	Ball() :kati3{}, ball{} {
+		
 
 	}
-	Ball(const sf::Color& color) :ball{ 10.5f } {
+	Ball(const sf::Color& color) :ball{ 10.5f }, kati3{} {
 		ball.setFillColor(color);
 
 		ball.setPosition(sf::Vector2{ 450.f,250.f });
@@ -110,27 +111,38 @@ public:
 		window.draw(ball);
 	}
 	void modifyPosition(sf::RenderWindow &window,int kati,int kati2) {
-		if (ball.getPosition().y - ball.getRadius() > 0 && ball.getPosition().y + ball.getRadius() < window.getSize().y  ) {
+		if (ball.getPosition().x <= 0) {
+			
+			reset(window);
+		}
+		else if (ball.getPosition().x >= window.getSize().x) {
+			
+			reset(window);
+		}
 
+
+		if (ball.getPosition().y - ball.getRadius() > 0 && ball.getPosition().y + ball.getRadius() < window.getSize().y&&kati3==0  ) {
+			
 			
 			if (kati == 1) {
 
 				//colision with p1
-				//int kati2 = rand() % 3 + 1;
+				
 				if (kati2 == 1) {
 					ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y - 5.5f);
 				}
 				else if (kati2 == 2) {
 					ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y);
 				}
-				else if(kati2==3) {
-					ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y +5.5f);
+				else if (kati2 == 3) {
+					ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y + 5.5f);
+					
 				}
 
 			}
 			else if (kati == 2) {
 				//colision with p2
-				//int kati2 = rand() % 3 + 1;
+				
 				if (kati2 == 1) {
 					ball.setPosition(ball.getPosition().x - 5.5f, ball.getPosition().y -5.5f);
 				}
@@ -145,28 +157,55 @@ public:
 			}
 		}
 		else {
-			//collide = true;
-			//std::cout << "hello\n";
+			kati3 = 4;
 			if (kati == 1) {
 				if (ball.getPosition().y - ball.getRadius() <= 0) {
+					task = 1;
+						
+						ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y + 5.5f);
+						
+						
 					
+				}
+				if (task == 1) {
 					ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y + 5.5f);
+
 				}
 				
 				else if (ball.getPosition().y + ball.getRadius() >= window.getSize().y) {
+					task = 2;
+						
+						ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y - 5.5f);
+						
+						
 					
+				}
+				if (task == 2) {
 					ball.setPosition(ball.getPosition().x + 5.5f, ball.getPosition().y - 5.5f);
 				}
 			
 			}
 			else if (kati == 2) {
 				if (ball.getPosition().y - ball.getRadius() <= 0) {
+					task = 3;
+						
+						ball.setPosition(ball.getPosition().x - 5.5f, ball.getPosition().y + 5.5f);
+						
+						
 					
+				}
+				if (task == 3) {
 					ball.setPosition(ball.getPosition().x - 5.5f, ball.getPosition().y + 5.5f);
 				}
-				
 				else if (ball.getPosition().y + ball.getRadius() >= window.getSize().y) {
+					task = 4;
+						
+						ball.setPosition(ball.getPosition().x - 10.5f, ball.getPosition().y - 10.5f);
+						
+						
 					
+				}
+				if (task == 4) {
 					ball.setPosition(ball.getPosition().x - 5.5f, ball.getPosition().y - 5.5f);
 				}
 				
@@ -180,9 +219,18 @@ public:
 	sf::FloatRect get() {
 		return ball.getGlobalBounds();
 	}
+	void reset(sf::RenderWindow &window) {
+		
+		ball.setPosition(sf::Vector2{ 450.f,250.f });
+		
+		Sleep(1000);
+	}
 
 	
 
 };
+
+
+
 
 
